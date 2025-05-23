@@ -1,8 +1,6 @@
-Here is the English translation of your README:
-
 # DevProjectConnector
 
-Traditional Chinese Instructions
+[繁體中文說明](./TC.READMEmd)
 
 ## Overview
 DevProjectConnector is a command-line tool that helps developers discover open-source projects and developers tailored to their GitHub journey. By analyzing your GitHub profile, it recommends projects and people that match your skills, interests, and activity.
