@@ -34,16 +34,12 @@ program
         .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0];
 
       // ====== Summary ======
-      // ...existing code...
-      // ====== Summary ======
       console.log('\nWelcome! Here is your personalized GitHub Open Source Exploration Report!\n');
       if (userProfile.avatar_url) {
         console.log(`${userProfile.login}'s icon: ${userProfile.avatar_url}`);
         console.log(`Profile: https://github.com/${userProfile.login}`);
       }
       console.log(`User: ${userProfile.login} (${userProfile.name || 'N/A'})`);
-      // ...existing code...
-      // ...existing code...
       if (userProfile.bio) console.log(`Bio: ${userProfile.bio}`);
       if (userProfile.blog) console.log(`Blog: ${userProfile.blog}`);
       if (userProfile.location) console.log(`Location: ${userProfile.location}`);
@@ -53,9 +49,10 @@ program
       console.log(`Joined GitHub: ${joinedDate.toISOString()} (Local: ${joinedDate.toLocaleString()})`);
       console.log(`Most Used Language: ${topLang}`);
       if (lastPushRepo) {
-              const localPushTime = new Date(lastPushRepo.pushed_at).toLocaleString();
-              console.log(`Last pushed repo: ${lastPushRepo.name} (${lastPushRepo.pushed_at}, Local: ${localPushTime})`);
-            }
+        const localPushTime = new Date(lastPushRepo.pushed_at).toLocaleString();
+        console.log(`Last pushed repo: ${lastPushRepo.name} (${lastPushRepo.pushed_at}, Local: ${localPushTime})`);
+      }
+
       // ====== Highlight Projects ======
       const topStarRepos = [...userProfile.repos]
         .sort((a, b) => b.stargazers_count - a.stargazers_count)
@@ -118,21 +115,30 @@ program
         console.log('(No recommendations yet)');
       }
 
-      // ====== Fresh Discoveries ======
+      // ====== Fresh Discoveries & Closest Match Recommendations (去重複) ======
       const newRepos = await recommendNewRepos(userProfile);
+      const closestRepos = await findClosestRepos(userProfile);
+
+      // 用 Set 記錄已顯示過的專案
+      const shownRepoNames = new Set();
+
       if (newRepos.length) {
         console.log('\nNew Projects You May Like:');
         newRepos.forEach(repo => {
-          console.log(`- ${repo.full_name} (${repo.stargazers_count}★): ${repo.html_url}`);
+          if (!shownRepoNames.has(repo.full_name)) {
+            console.log(`- ${repo.full_name} (${repo.stargazers_count}★): ${repo.html_url}`);
+            shownRepoNames.add(repo.full_name);
+          }
         });
       }
 
-      // ====== Closest Match Recommendations ======
-      const closestRepos = await findClosestRepos(userProfile);
       if (closestRepos.length) {
         console.log('\nProjects Closest to Your Tech/Topics:');
         closestRepos.forEach(repo => {
-          console.log(`- ${repo.full_name} (${repo.stargazers_count}★): ${repo.html_url}`);
+          if (!shownRepoNames.has(repo.full_name)) {
+            console.log(`- ${repo.full_name} (${repo.stargazers_count}★): ${repo.html_url}`);
+            shownRepoNames.add(repo.full_name);
+          }
         });
       }
 
@@ -180,21 +186,30 @@ program
       matchedProjects.forEach(repo => {
         reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
       });
+
+      // 匯出推薦專案時也去重複
+      const exportedRepoNames = new Set();
       reportLines.push(`\nNew Projects You May Like:`);
       newRepos.forEach(repo => {
-        reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
+        if (!exportedRepoNames.has(repo.full_name)) {
+          reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
+          exportedRepoNames.add(repo.full_name);
+        }
       });
       reportLines.push(`\nProjects Closest to Your Tech/Topics:`);
       closestRepos.forEach(repo => {
-        reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
+        if (!exportedRepoNames.has(repo.full_name)) {
+          reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
+          exportedRepoNames.add(repo.full_name);
+        }
       });
       reportLines.push(`\nDevelopers You May Want to Know:`);
       closestUsers.forEach(user => {
         reportLines.push(`  - [${user.login}](https://github.com/${user.login})`);
       });
 
-
-      ;
+      // 你可以選擇將 reportLines 輸出到檔案
+      // fs.writeFileSync('github_report.md', reportLines.join('\n'), 'utf-8');
 
     } catch (error) {
       console.error('Error fetching data:', error.message);
