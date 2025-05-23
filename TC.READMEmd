@@ -15,9 +15,15 @@ DevProjectConnector 是一個命令列工具，能根據你的 GitHub 檔案，�
 可在這裡建立：https://github.com/settings/tokens/new
 
 執行 CLI 前，請先將 token 設為環境變數：
-```bash
-export GITHUB_TOKEN=your_github_token_here
-```
+- **Windows PowerShell:**
+  ```powershell
+  $env:GITHUB_TOKEN = "your_github_token_here"
+  ```
+
+- **Linux/macOS:**
+  ```bash
+  export GITHUB_TOKEN=your_github_token_here
+  ```
 
 ## 安裝步驟
 
