@@ -25,7 +25,7 @@ export GITHUB_TOKEN=your_github_token_here
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/henryHenryLok0/DevProjectConnector
+   git clone https://github.com/HenryLok0/DevProjectConnector
    ```
 
 2. Navigate to the project directory:
