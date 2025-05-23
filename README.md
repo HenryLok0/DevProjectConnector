@@ -1,6 +1,8 @@
+Here is the English translation of your README:
+
 # DevProjectConnector
 
-[繁體中文說明](./TC.READMEmd)
+Traditional Chinese Instructions
 
 ## Overview
 DevProjectConnector is a command-line tool that helps developers discover open-source projects and developers tailored to their GitHub journey. By analyzing your GitHub profile, it recommends projects and people that match your skills, interests, and activity.
@@ -16,10 +18,17 @@ DevProjectConnector is a command-line tool that helps developers discover open-s
 You need a GitHub personal access token with at least `public_repo` scope.  
 Create one here: https://github.com/settings/tokens/new
 
-Export your token as an environment variable before running the CLI:
-```bash
-export GITHUB_TOKEN=your_github_token_here
-```
+**Set your token as an environment variable before running the CLI:**
+
+- **Windows PowerShell:**
+  ```powershell
+  $env:GITHUB_TOKEN = "your_github_token_here"
+  ```
+
+- **Linux/macOS:**
+  ```bash
+  export GITHUB_TOKEN=your_github_token_here
+  ```
 
 ## Installation
 
@@ -44,7 +53,6 @@ To use the DevProjectConnector CLI, run:
 ```bash
 node bin/index.js <github_username>
 ```
-
 Replace `<github_username>` with the GitHub username you want to analyze.  
 For example:
 ```bash
@@ -121,6 +129,8 @@ Contributions are welcome! Please read the [CONTRIBUTING.md](CONTRIBUTING.md) fo
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
 
 ## Acknowledgments
 
