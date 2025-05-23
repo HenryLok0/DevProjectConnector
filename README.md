@@ -64,8 +64,6 @@ node bin/index.js google
 ### Example Output
 
 ```
-Welcome! Here is your personalized GitHub Open Source Exploration Report!
-
 User: google (Google)
 Bio: Google ❤️ Open Source
 Blog: https://opensource.google/
