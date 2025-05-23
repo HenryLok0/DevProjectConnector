@@ -174,8 +174,6 @@ program
       closestUsers.forEach(user => {
         reportLines.push(`  - [${user.login}](https://github.com/${user.login})`);
       });
-      fs.writeFileSync(`report_${userProfile.login}.md`, reportLines.join('\n'));
-      console.log(`\nReport generated: report_${userProfile.login}.md`);
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
