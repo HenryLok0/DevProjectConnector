@@ -2,6 +2,10 @@
 
 [繁體中文說明](./TC.READMEmd)
 
+[![Node.js](https://img.shields.io/badge/Node.js-14%2B-green?logo=node.js)](https://nodejs.org/)
+[![MIT License](https://img.shields.io/github/license/HenryLok0/DevProjectConnector?color=blue)](https://github.com/HenryLok0/DevProjectConnector/blob/main/LICENSE)
+[![Code Size](https://img.shields.io/github/languages/code-size/HenryLok0/DevProjectConnector?style=flat-square&logo=github)](https://github.com/HenryLok0/DevProjectConnector)
+
 ## Overview
 DevProjectConnector is a command-line tool that helps developers discover open-source projects and developers tailored to their GitHub journey. By analyzing your GitHub profile, it recommends projects and people that match your skills, interests, and activity.
 
