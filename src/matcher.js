@@ -1,20 +1,18 @@
 const axios = require('axios');
 
-// 過濾常見無意義字
+// Common stopwords to ignore in keyword extraction
 const STOPWORDS = new Set([
     'github', 'project', 'code', 'open', 'source', 'repo', 'readme', 'main', 'test', 'example', 'sample', 'awesome', 'list', 'tool', 'tools', 'app', 'application', 'api', 'framework', 'library', 'system', 'file', 'files', 'data', 'user', 'users', 'use', 'using', 'for', 'with', 'and', 'the', 'from', 'your', 'this', 'that', 'about', 'more', 'other', 'based', 'support', 'simple', 'awesome', 'awesome-list'
 ]);
 
-// 更完整的關鍵字萃取：包含 repo、starred、README，並排除 stopwords
+// Extract top keywords from user's repos, starred repos, and README
 function extractKeywords(userProfile) {
     const words = [];
-    // 自己的 repo
     userProfile.repos.forEach(repo => {
         if (repo.language) words.push(repo.language);
         if (repo.topics) words.push(...repo.topics);
         if (repo.description) words.push(...repo.description.split(/\W+/));
     });
-    // Starred repo
     if (userProfile.starred) {
         userProfile.starred.forEach(repo => {
             if (repo.language) words.push(repo.language);
@@ -22,11 +20,9 @@ function extractKeywords(userProfile) {
             if (repo.description) words.push(...repo.description.split(/\W+/));
         });
     }
-    // README
     if (userProfile.readme) {
         words.push(...userProfile.readme.split(/\W+/));
     }
-    // 過濾短字、stopwords，統計頻率，取前 8
     const freq = {};
     words.forEach(w => {
         const word = w && w.toLowerCase();
@@ -37,7 +33,31 @@ function extractKeywords(userProfile) {
     return Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8).map(e => e[0]);
 }
 
-// 根據多組關鍵字組合推薦新專案，並排除已互動過的專案與超熱門專案
+// Get user's organizations (login lowercase)
+async function getUserOrganizations(userProfile, axiosConfig = {}) {
+    try {
+        const orgsRes = await axios.get(`https://api.github.com/users/${userProfile.login}/orgs?per_page=100`, axiosConfig);
+        return orgsRes.data.map(org => org.login.toLowerCase());
+    } catch (e) {
+        return [];
+    }
+}
+
+// Filter out repos from user's organizations
+function filterOutOrgRepos(repos, userOrgs) {
+    return repos.filter(repo => !userOrgs.includes((repo.owner && repo.owner.login || '').toLowerCase()));
+}
+
+// Sort repositories by community activity (stars, forks, open issues, recent push)
+function sortByCommunityActivity(repos) {
+    return repos.sort((a, b) => {
+        const aScore = (a.stargazers_count || 0) + (a.forks_count || 0) + (a.open_issues_count || 0) + (new Date(a.pushed_at).getTime() / 1e12);
+        const bScore = (b.stargazers_count || 0) + (b.forks_count || 0) + (b.open_issues_count || 0) + (new Date(b.pushed_at).getTime() / 1e12);
+        return bScore - aScore;
+    });
+}
+
+// Recommend new repositories based on keywords, excluding already interacted, org, and super popular repos
 async function recommendNewRepos(userProfile) {
     const keywords = extractKeywords(userProfile);
     const seen = new Set([
@@ -45,36 +65,40 @@ async function recommendNewRepos(userProfile) {
         ...(userProfile.starred || []).map(r => r.full_name),
         ...(userProfile.collaborated || [])
     ]);
+    const axiosConfig = require('./github').axiosConfig || {};
+    const userOrgs = await getUserOrganizations(userProfile, axiosConfig);
     let found = [];
-    // 單關鍵字搜尋，改用 best-match 並過濾超熱門
+    // Single keyword search
     for (const kw of keywords) {
         const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(kw)}+pushed:>2023-01-01+in:description,readme&sort=best-match&order=desc&per_page=5`;
-        const res = await axios.get(url);
+        const res = await axios.get(url, axiosConfig);
         found = found.concat(res.data.items.filter(repo =>
             !seen.has(repo.full_name) &&
             repo.owner.login !== userProfile.login &&
-            repo.stargazers_count < 100000 // 過濾超熱門專案
+            repo.stargazers_count < 100000 &&
+            !userOrgs.includes(repo.owner.login.toLowerCase())
         ));
         if (found.length >= 5) break;
     }
-    // 多關鍵字組合搜尋
+    // Multi-keyword combination search
     if (found.length < 5 && keywords.length > 1) {
         for (let i = 0; i < keywords.length; i++) {
             for (let j = i + 1; j < keywords.length; j++) {
                 const combo = `${keywords[i]}+${keywords[j]}`;
                 const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(combo)}+pushed:>2023-01-01+in:description,readme&sort=best-match&order=desc&per_page=3`;
-                const res = await axios.get(url);
+                const res = await axios.get(url, axiosConfig);
                 found = found.concat(res.data.items.filter(repo =>
                     !seen.has(repo.full_name) &&
                     repo.owner.login !== userProfile.login &&
-                    repo.stargazers_count < 100000
+                    repo.stargazers_count < 100000 &&
+                    !userOrgs.includes(repo.owner.login.toLowerCase())
                 ));
                 if (found.length >= 5) break;
             }
             if (found.length >= 5) break;
         }
     }
-    // 過濾同作者重複專案
+    // Filter out duplicate repos from the same author
     const unique = [];
     const names = new Set();
     const authors = new Set();
@@ -86,10 +110,10 @@ async function recommendNewRepos(userProfile) {
         }
         if (unique.length >= 5) break;
     }
-    return unique;
+    return sortByCommunityActivity(unique);
 }
 
-// 根據關鍵字推薦最接近的專案（可與 recommendNewRepos 合併優化）
+// Recommend closest repositories based on keywords, excluding org repos
 async function findClosestRepos(userProfile) {
     const keywords = extractKeywords(userProfile);
     const seen = new Set([
@@ -97,35 +121,39 @@ async function findClosestRepos(userProfile) {
         ...(userProfile.starred || []).map(r => r.full_name),
         ...(userProfile.collaborated || [])
     ]);
+    const axiosConfig = require('./github').axiosConfig || {};
+    const userOrgs = await getUserOrganizations(userProfile, axiosConfig);
     let found = [];
     for (const kw of keywords) {
         const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(kw)}+pushed:>2023-01-01+in:description,readme&sort=best-match&order=desc&per_page=3`;
-        const res = await axios.get(url);
+        const res = await axios.get(url, axiosConfig);
         found = found.concat(res.data.items.filter(repo =>
             !seen.has(repo.full_name) &&
             repo.owner.login !== userProfile.login &&
-            repo.stargazers_count < 100000
+            repo.stargazers_count < 100000 &&
+            !userOrgs.includes(repo.owner.login.toLowerCase())
         ));
         if (found.length >= 5) break;
     }
-    // 多關鍵字組合搜尋
+    // Multi-keyword combination search
     if (found.length < 5 && keywords.length > 1) {
         for (let i = 0; i < keywords.length; i++) {
             for (let j = i + 1; j < keywords.length; j++) {
                 const combo = `${keywords[i]}+${keywords[j]}`;
                 const url = `https://api.github.com/search/repositories?q=${encodeURIComponent(combo)}+pushed:>2023-01-01+in:description,readme&sort=best-match&order=desc&per_page=2`;
-                const res = await axios.get(url);
+                const res = await axios.get(url, axiosConfig);
                 found = found.concat(res.data.items.filter(repo =>
                     !seen.has(repo.full_name) &&
                     repo.owner.login !== userProfile.login &&
-                    repo.stargazers_count < 100000
+                    repo.stargazers_count < 100000 &&
+                    !userOrgs.includes(repo.owner.login.toLowerCase())
                 ));
                 if (found.length >= 5) break;
             }
             if (found.length >= 5) break;
         }
     }
-    // 過濾同作者重複專案
+    // Filter out duplicate repos from the same author
     const unique = [];
     const names = new Set();
     const authors = new Set();
@@ -137,9 +165,10 @@ async function findClosestRepos(userProfile) {
         }
         if (unique.length >= 5) break;
     }
-    return unique;
+    return sortByCommunityActivity(unique);
 }
 
+// Recommend developers with similar interests/tech/topics, excluding org members and mutuals
 async function findClosestUsers(userProfile) {
     const keywords = extractKeywords(userProfile);
     if (!keywords.length) return [];
@@ -147,7 +176,7 @@ async function findClosestUsers(userProfile) {
     const users = [];
     const axiosConfig = require('./github').axiosConfig || {};
 
-    // 取得自己追蹤與被追蹤名單（避免推薦已互相關注者）
+    // Get following and followers list (to avoid recommending already mutuals)
     let following = [];
     let followers = [];
     try {
@@ -160,14 +189,14 @@ async function findClosestUsers(userProfile) {
     } catch (e) { }
     const mutuals = new Set([...following, ...followers]);
 
-    // 取得自己所屬的所有組織
+    // Get all organizations the user belongs to
     let myOrgs = [];
     try {
         const orgsRes = await axios.get(`https://api.github.com/users/${userProfile.login}/orgs?per_page=100`, axiosConfig);
         myOrgs = orgsRes.data.map(org => org.login.toLowerCase());
     } catch (e) { }
 
-    // 1. 關鍵字組合查詢
+    // 1. Keyword combination search
     if (keywords.length > 1) {
         for (let i = 0; i < keywords.length; i++) {
             for (let j = i + 1; j < keywords.length; j++) {
@@ -195,7 +224,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 2. 關鍵字+developer/engineer/opensource 查詢
+    // 2. Keyword + developer/engineer/opensource search
     const extraTerms = ['developer', 'engineer', 'opensource'];
     if (users.length < 5) {
         for (const kw of keywords) {
@@ -224,7 +253,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 3. 單關鍵字多欄位查詢（補足不足）
+    // 3. Single keyword multi-field search (fill up if not enough)
     if (users.length < 5) {
         const searchFields = ['bio', 'login', 'name'];
         for (const kw of keywords) {
@@ -252,7 +281,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 4. 補充：推薦 star/fork 過的 repo 作者（保底推薦）
+    // 4. Supplement: recommend authors of starred/forked repos (fallback)
     if (users.length < 5 && userProfile.starred) {
         for (const repo of userProfile.starred) {
             if (
@@ -274,12 +303,22 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    return users.slice(0, 5);
+    // Sort by followers if available (more active/known users first)
+    return users
+        .sort((a, b) => (b.followers || 0) - (a.followers || 0))
+        .slice(0, 5);
 }
-// 你熟悉的專案（fork 或 starred，但不是自己的 repo）
+
+// Projects you are familiar with (forked or starred, but not your own repo or org repo)
 async function matchProjects(userProfile) {
-    const forkedRepos = userProfile.repos.filter(repo => repo.fork && repo.owner.login !== userProfile.login);
-    const starredRepos = (userProfile.starred || []).filter(repo => repo.owner.login !== userProfile.login);
+    const axiosConfig = require('./github').axiosConfig || {};
+    const userOrgs = await getUserOrganizations(userProfile, axiosConfig);
+    const forkedRepos = userProfile.repos.filter(
+        repo => repo.fork && repo.owner.login !== userProfile.login && !userOrgs.includes(repo.owner.login.toLowerCase())
+    );
+    const starredRepos = (userProfile.starred || []).filter(
+        repo => repo.owner.login !== userProfile.login && !userOrgs.includes(repo.owner.login.toLowerCase())
+    );
     const matchedSet = new Map();
     forkedRepos.forEach(repo => matchedSet.set(repo.full_name, repo));
     starredRepos.forEach(repo => matchedSet.set(repo.full_name, repo));

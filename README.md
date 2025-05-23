@@ -7,13 +7,14 @@
 [![Code Size](https://img.shields.io/github/languages/code-size/HenryLok0/DevProjectConnector?style=flat-square&logo=github)](https://github.com/HenryLok0/DevProjectConnector)
 
 ## Overview
-DevProjectConnector is a command-line tool that helps developers discover open-source projects and developers tailored to their GitHub journey. By analyzing your GitHub profile, it recommends projects and people that match your skills, interests, and activity.
+DevProjectConnector is a user-friendly command-line tool designed to help developers discover open-source projects and connect with like-minded developers on GitHub. By analyzing your GitHub profile—including your repositories, starred projects, and activity—it provides personalized recommendations for projects and people that match your skills, interests, and development journey.
 
 ## Features
-- Analyze GitHub profiles to extract relevant skills, languages, and activity.
-- Recommend open-source projects that align with your experience and interests.
-- Suggest developers you may want to know or follow.
-- Export a detailed Markdown report for your reference.
+- Analyzes your GitHub profile to identify your top languages, technologies, and activity patterns.
+- Recommends open-source projects that align with your experience, interests, and recent contributions.
+- Suggests developers with similar interests or expertise for you to follow or collaborate with.
+- Excludes your own and organization repositories from recommendations for more relevant results.
+- Provides human-centric, personalized suggestions to help you grow your network and explore new opportunities in the open-source community.
 
 ## Prerequisites
 

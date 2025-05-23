@@ -34,8 +34,19 @@ program
         .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at))[0];
 
       // ====== Summary ======
+      // ...existing code...
+      // ====== Summary ======
       console.log('\nWelcome! Here is your personalized GitHub Open Source Exploration Report!\n');
+      // 新增顯示 GitHub 頭像與連結
+      // ...existing code...
+      // 新增顯示 GitHub 頭像與連結
+      if (userProfile.avatar_url) {
+        console.log(`${userProfile.login}'s icon: ${userProfile.avatar_url}`);
+        console.log(`Profile: https://github.com/${userProfile.login}`);
+      }
       console.log(`User: ${userProfile.login} (${userProfile.name || 'N/A'})`);
+      // ...existing code...
+      // ...existing code...
       if (userProfile.bio) console.log(`Bio: ${userProfile.bio}`);
       if (userProfile.blog) console.log(`Blog: ${userProfile.blog}`);
       if (userProfile.location) console.log(`Location: ${userProfile.location}`);
