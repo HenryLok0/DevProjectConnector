@@ -11,6 +11,15 @@ program
     try {
       const userProfile = await getUserProfile(githubProfile);
 
+      // Check if user has any repositories or starred projects
+      const hasRepos = Array.isArray(userProfile.repos) && userProfile.repos.length > 0;
+      const hasStarred = Array.isArray(userProfile.starred) && userProfile.starred.length > 0;
+
+      if (!hasRepos && !hasStarred) {
+        console.log('(No recommendations yet, try starring or contributing to more projects!)');
+        return;
+      }
+
       // Calculate most used language
       const langCount = {};
       userProfile.repos.forEach(repo => {
@@ -32,7 +41,8 @@ program
       if (userProfile.location) console.log(`Location: ${userProfile.location}`);
       console.log(`Followers: ${userProfile.followers} | Following: ${userProfile.following}`);
       console.log(`Public Repos: ${userProfile.public_repos}`);
-      console.log(`Joined GitHub: ${userProfile.created_at}`);
+      const joinedDate = new Date(userProfile.created_at);
+      console.log(`Joined GitHub: ${joinedDate.toISOString()} (Local: ${joinedDate.toLocaleString()})`);
       console.log(`Most Used Language: ${topLang}`);
       if (lastPushRepo) {
         console.log(`Last pushed repo: ${lastPushRepo.name} (${lastPushRepo.pushed_at})`);
@@ -174,6 +184,10 @@ program
       closestUsers.forEach(user => {
         reportLines.push(`  - [${user.login}](https://github.com/${user.login})`);
       });
+
+
+      ;
+
     } catch (error) {
       console.error('Error fetching data:', error.message);
     }
