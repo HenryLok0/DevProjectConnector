@@ -12,7 +12,7 @@ DevProjectConnector 是一個命令列工具，能根據你的 GitHub 檔案，�
 ## 先決條件
 
 你需要一組具有 `public_repo` 權限的 GitHub Personal Access Token。  
-可在這裡建立：https://github.com/settings/tokens
+可在這裡建立：https://github.com/settings/tokens/new
 
 執行 CLI 前，請先將 token 設為環境變數：
 ```bash
