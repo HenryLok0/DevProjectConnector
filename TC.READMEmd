@@ -23,7 +23,7 @@ export GITHUB_TOKEN=your_github_token_here
 
 1. 複製本專案：
    ```bash
-   git clone https://github.com/henryHenryLok0/DevProjectConnector
+   git clone https://github.com/HenryLok0/DevProjectConnector
    ```
 
 2. 進入專案資料夾：
