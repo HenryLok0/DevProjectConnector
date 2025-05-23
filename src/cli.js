@@ -37,9 +37,6 @@ program
       // ...existing code...
       // ====== Summary ======
       console.log('\nWelcome! Here is your personalized GitHub Open Source Exploration Report!\n');
-      // 新增顯示 GitHub 頭像與連結
-      // ...existing code...
-      // 新增顯示 GitHub 頭像與連結
       if (userProfile.avatar_url) {
         console.log(`${userProfile.login}'s icon: ${userProfile.avatar_url}`);
         console.log(`Profile: https://github.com/${userProfile.login}`);
@@ -56,9 +53,9 @@ program
       console.log(`Joined GitHub: ${joinedDate.toISOString()} (Local: ${joinedDate.toLocaleString()})`);
       console.log(`Most Used Language: ${topLang}`);
       if (lastPushRepo) {
-        console.log(`Last pushed repo: ${lastPushRepo.name} (${lastPushRepo.pushed_at})`);
-      }
-
+              const localPushTime = new Date(lastPushRepo.pushed_at).toLocaleString();
+              console.log(`Last pushed repo: ${lastPushRepo.name} (${lastPushRepo.pushed_at}, Local: ${localPushTime})`);
+            }
       // ====== Highlight Projects ======
       const topStarRepos = [...userProfile.repos]
         .sort((a, b) => b.stargazers_count - a.stargazers_count)
