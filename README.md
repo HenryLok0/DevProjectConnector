@@ -14,7 +14,7 @@ DevProjectConnector is a command-line tool that helps developers discover open-s
 ## Prerequisites
 
 You need a GitHub personal access token with at least `public_repo` scope.  
-Create one here: https://github.com/settings/tokens
+Create one here: https://github.com/settings/tokens/new
 
 Export your token as an environment variable before running the CLI:
 ```bash
