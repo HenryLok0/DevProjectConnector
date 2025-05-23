@@ -1,0 +1,29 @@
+{
+  "name": "devproject-connector",
+  "version": "1.0.0",
+  "description": "Matches developers with open-source projects based on their skills, interests, and experience.",
+  "main": "bin/index.js",
+  "bin": {
+    "devproject-connector": "bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "open-source",
+    "github",
+    "cli",
+    "developer",
+    "matching"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "commander": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  }
+}

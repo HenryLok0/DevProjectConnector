@@ -1,0 +1,126 @@
+# DevProjectConnector
+
+## 簡介
+DevProjectConnector 是一個命令列工具，能根據你的 GitHub 檔案，協助你發掘適合自己技術與興趣的開源專案與開發者。它會分析你的 GitHub 活動，推薦相關的專案與人脈，並可匯出詳細的 Markdown 報告。
+
+## 功能特色
+- 分析 GitHub 檔案，萃取技能、語言與活躍紀錄。
+- 推薦與你經驗和興趣相符的開源專案。
+- 建議你可能想認識或追蹤的開發者。
+- 匯出詳細的 Markdown 報告，方便日後參考。
+
+## 先決條件
+
+你需要一組具有 `public_repo` 權限的 GitHub Personal Access Token。  
+可在這裡建立：https://github.com/settings/tokens
+
+執行 CLI 前，請先將 token 設為環境變數：
+```bash
+export GITHUB_TOKEN=your_github_token_here
+```
+
+## 安裝步驟
+
+1. 複製本專案：
+   ```bash
+   git clone https://github.com/henryHenryLok0/DevProjectConnector
+   ```
+
+2. 進入專案資料夾：
+   ```bash
+   cd DevProjectConnector
+   ```
+
+3. 安裝相依套件：
+   ```bash
+   npm install
+   ```
+
+## 使用方式
+
+執行 DevProjectConnector CLI：
+```bash
+node bin/index.js <github_username>
+```
+
+將 `<github_username>` 替換為你想分析的 GitHub 使用者名稱。  
+例如：
+```bash
+node bin/index.js google
+```
+
+### 範例輸出
+
+```
+Welcome! Here is your personalized GitHub Open Source Exploration Report!
+
+User: google (Google)
+Bio: Google ❤️ Open Source
+Blog: https://opensource.google/
+Location: United States of America
+Followers: 54614 | Following: 0
+Public Repos: 2769
+Joined GitHub: 2012-01-18T01:30:18Z
+Most Used Language: Python
+Last pushed repo: adk-python (2025-05-23T04:57:14Z)
+
+Your Top Starred Projects:
+  - A2A (15863★): https://github.com/google/A2A
+  - adk-python (9092★): https://github.com/google/adk-python
+  - accompanist (7651★): https://github.com/google/accompanist
+
+Recently Active Projects:
+  - adk-python (last push: 2025-05-23T04:57:14Z)
+  - a2a-python (last push: 2025-05-23T04:37:24Z)
+  - android-cuttlefish (last push: 2025-05-23T01:33:47Z)
+
+Your Forked Projects:
+  - google/amp-toolbox: https://github.com/google/amp-toolbox
+
+Your Profile README Preview:
+(No user README found)
+
+Projects you have collaborated on (PR/Issue):
+  - google/device-infra (https://github.com/google/device-infra)
+  - google/protobuf.dart (https://github.com/google/protobuf.dart)
+  - google/adk-samples (https://github.com/google/adk-samples)
+
+Projects you are familiar with (based on your activity):
+(No recommendations yet)
+
+New Projects You May Like:
+- public-apis/public-apis (346283★): https://github.com/public-apis/public-apis
+- donnemartin/system-design-primer (300570★): https://github.com/donnemartin/system-design-primer
+- vinta/awesome-python (244246★): https://github.com/vinta/awesome-python
+- tomokuni/Myrica (200★): https://github.com/tomokuni/Myrica
+- dlcowen/sansfor509 (200★): https://github.com/dlcowen/sansfor509
+
+Projects Closest to Your Tech/Topics:
+- donnemartin/system-design-primer (300570★): https://github.com/donnemartin/system-design-primer
+- vinta/awesome-python (244246★): https://github.com/vinta/awesome-python
+- practical-tutorials/project-based-learning (228279★): https://github.com/practical-tutorials/project-based-learning
+- TheAlgorithms/Python (200742★): https://github.com/TheAlgorithms/Python
+- tensorflow/tensorflow (190079★): https://github.com/tensorflow/tensorflow
+
+Developers You May Want to Know:
+- mammuth: https://github.com/mammuth
+- chegejohn159: https://github.com/chegejohn159
+- Arka-cell: https://github.com/Arka-cell
+- nicholasaiello: https://github.com/nicholasaiello
+- marco97pa: https://github.com/marco97pa
+
+Report generated: report_google.md
+```
+
+## 貢獻方式
+
+歡迎貢獻！如有建議或改進，請提出 issue 或 pull request。
+
+## 授權
+
+本專案採用 MIT 授權，詳見 [LICENSE](LICENSE) 檔案。
+
+## 致謝
+
+- 靈感來自對永續網頁開發的需求
+- 感謝所有貢獻者與開源社群的支持
