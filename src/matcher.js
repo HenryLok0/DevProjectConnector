@@ -287,6 +287,7 @@ async function findClosestUsers(userProfile) {
             if (
                 repo.owner &&
                 repo.owner.login &&
+                repo.owner.type === 'User' && // Only recommend personal accounts
                 !seen.has(repo.owner.login) &&
                 repo.owner.login !== userProfile.login &&
                 !mutuals.has(repo.owner.login) &&
@@ -303,9 +304,28 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // Sort by followers if available (more active/known users first)
+    // More humanized sorting: has avatar, has bio, has followers, keyword occurrence, exclude bots
+    function userScore(u) {
+        let score = 0;
+        if (u.avatar_url) score += 2;
+        if (u.bio && u.bio.length > 10) score += 2;
+        if (u.followers) score += Math.min(u.followers, 100) / 20;
+        // Keyword occurrence in bio/name/login
+        const kw = keywords.join('|');
+        const re = new RegExp(kw, 'gi');
+        if (u.bio) score += ((u.bio.match(re) || []).length);
+        if (u.name) score += ((u.name.match(re) || []).length);
+        if (u.login) score += ((u.login.match(re) || []).length);
+        // Penalize bots/empty accounts
+        if (u.login && u.login.toLowerCase().includes('bot')) score -= 5;
+        if (!u.bio || u.bio.length < 5) score -= 1;
+        if ((u.followers || 0) < 2) score -= 1;
+        return score;
+    }
+
     return users
-        .sort((a, b) => (b.followers || 0) - (a.followers || 0))
+        .filter(u => u.type && u.type.toLowerCase() === 'user')
+        .sort((a, b) => userScore(b) - userScore(a))
         .slice(0, 5);
 }
 
@@ -314,15 +334,26 @@ async function matchProjects(userProfile) {
     const axiosConfig = require('./github').axiosConfig || {};
     const userOrgs = await getUserOrganizations(userProfile, axiosConfig);
     const forkedRepos = userProfile.repos.filter(
-        repo => repo.fork && repo.owner.login !== userProfile.login && !userOrgs.includes(repo.owner.login.toLowerCase())
+        repo =>
+            repo.fork &&
+            repo.owner.login !== userProfile.login &&
+            repo.owner.type === 'User' && // Only keep personal accounts
+            !userOrgs.includes(repo.owner.login.toLowerCase())
     );
     const starredRepos = (userProfile.starred || []).filter(
-        repo => repo.owner.login !== userProfile.login && !userOrgs.includes(repo.owner.login.toLowerCase())
+        repo =>
+            repo.owner.login !== userProfile.login &&
+            repo.owner.type === 'User' && // Only keep personal accounts
+            !userOrgs.includes(repo.owner.login.toLowerCase())
     );
     const matchedSet = new Map();
     forkedRepos.forEach(repo => matchedSet.set(repo.full_name, repo));
     starredRepos.forEach(repo => matchedSet.set(repo.full_name, repo));
-    return Array.from(matchedSet.values()).slice(0, 5);
+    // Filter out organization repos
+    const filtered = Array.from(matchedSet.values()).filter(
+        repo => repo.owner.type === 'User' && !userOrgs.includes((repo.owner && repo.owner.login || '').toLowerCase())
+    );
+    return filtered.slice(0, 5);
 }
 
 module.exports = {
