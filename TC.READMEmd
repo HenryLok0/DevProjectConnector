@@ -53,68 +53,67 @@ node bin/index.js <github_username>
 將 `<github_username>` 替換為你想分析的 GitHub 使用者名稱。  
 例如：
 ```bash
-node bin/index.js google
+node bin/index.js henrylok0
 ```
 
 ### 範例輸出
 
 ```
-User: google (Google)
-Bio: Google ❤️ Open Source
-Blog: https://opensource.google/
-Location: United States of America
-Followers: 54614 | Following: 0
-Public Repos: 2769
-Joined GitHub: 2012-01-18T01:30:18Z
-Most Used Language: Python
-Last pushed repo: adk-python (2025-05-23T04:57:14Z)
+HenryLok0's icon: https://avatars.githubusercontent.com/u/143982077?v=4
+Profile: https://github.com/HenryLok0
+User: HenryLok0 (Henry Lok)
+Location: Hong Kong
+Followers: 1 | Following: 3
+Public Repos: 3
+Joined GitHub: 2023-09-04T03:12:02.000Z (Local: 2023/9/4 上午11:12:02)
+Most Used Language: JavaScript
+Last pushed repo: DevProjectConnector (2025-05-23T11:36:49Z, Local: 2025/5/23 下午7:36:49)
 
 Your Top Starred Projects:
-  - A2A (15863★): https://github.com/google/A2A
-  - adk-python (9092★): https://github.com/google/adk-python
-  - accompanist (7651★): https://github.com/google/accompanist
+  - DevProjectConnector (2★): https://github.com/HenryLok0/DevProjectConnector
+  - WebEcoAnalyzer (2★): https://github.com/HenryLok0/WebEcoAnalyzer
+  - HenryLok0 (0★): https://github.com/HenryLok0/HenryLok0
 
 Recently Active Projects:
-  - adk-python (last push: 2025-05-23T04:57:14Z)
-  - a2a-python (last push: 2025-05-23T04:37:24Z)
-  - android-cuttlefish (last push: 2025-05-23T01:33:47Z)
+  - DevProjectConnector (last push: 2025-05-23T11:36:49Z)
+  - WebEcoAnalyzer (last push: 2025-05-22T16:52:04Z)
+  - HenryLok0 (last push: 2025-05-21T03:08:49Z)
 
-Your Forked Projects:
-  - google/amp-toolbox: https://github.com/google/amp-toolbox
+Your Starred Projects:
+  - fhasse95/budget-flow-ios-translations (3★): https://github.com/fhasse95/budget-flow-ios-translations
+  - HenryLok0/DevProjectConnector (2★): https://github.com/HenryLok0/DevProjectConnector
+  - HenryLok0/WebEcoAnalyzer (2★): https://github.com/HenryLok0/WebEcoAnalyzer
 
 Your Profile README Preview:
-(No user README found)
+### GitHub Analytics
+
+| <img align="center" src="https://github-readme-stats.vercel.app/api?username=henrylok0&theme=github_dark&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" alt="Henry Lok's GitHub stats" /> | <img align="center" src="https://github-readme-stats.verc ...
 
 Projects you have collaborated on (PR/Issue):
-  - google/device-infra (https://github.com/google/device-infra)
-  - google/protobuf.dart (https://github.com/google/protobuf.dart)
-  - google/adk-samples (https://github.com/google/adk-samples)
+  - easeparkhk/easeparkhk (https://github.com/easeparkhk/easeparkhk)
 
 Projects you are familiar with (based on your activity):
-(No recommendations yet)
+- fhasse95/budget-flow-ios-translations (3★): https://github.com/fhasse95/budget-flow-ios-translations
+- anuraghazra/github-readme-stats (73400★): https://github.com/anuraghazra/github-readme-stats
+- inttter/md-badges (842★): https://github.com/inttter/md-badges
+- StepfenShawn/Cantonese (1179★): https://github.com/StepfenShawn/Cantonese
 
 New Projects You May Like:
-- public-apis/public-apis (346283★): https://github.com/public-apis/public-apis
-- donnemartin/system-design-primer (300570★): https://github.com/donnemartin/system-design-primer
-- vinta/awesome-python (244246★): https://github.com/vinta/awesome-python
-- tomokuni/Myrica (200★): https://github.com/tomokuni/Myrica
-- dlcowen/sansfor509 (200★): https://github.com/dlcowen/sansfor509
+- Pierian-Data/Complete-Python-3-Bootcamp (28387★): https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
+- python/cpython (67163★): https://github.com/python/cpython
+- FFmpeg/FFmpeg (50067★): https://github.com/FFmpeg/FFmpeg
+- nodejs/node-v0.x-archive (34394★): https://github.com/nodejs/node-v0.x-archive
+- googlehosts/hosts (20791★): https://github.com/googlehosts/hosts
 
 Projects Closest to Your Tech/Topics:
-- donnemartin/system-design-primer (300570★): https://github.com/donnemartin/system-design-primer
-- vinta/awesome-python (244246★): https://github.com/vinta/awesome-python
-- practical-tutorials/project-based-learning (228279★): https://github.com/practical-tutorials/project-based-learning
-- TheAlgorithms/Python (200742★): https://github.com/TheAlgorithms/Python
-- tensorflow/tensorflow (190079★): https://github.com/tensorflow/tensorflow
+- eugenp/tutorials (37151★): https://github.com/eugenp/tutorials
+- abhisheknaiidu/awesome-github-profile-readme (26615★): https://github.com/abhisheknaiidu/awesome-github-profile-readme
 
 Developers You May Want to Know:
-- mammuth: https://github.com/mammuth
-- chegejohn159: https://github.com/chegejohn159
-- Arka-cell: https://github.com/Arka-cell
-- nicholasaiello: https://github.com/nicholasaiello
-- marco97pa: https://github.com/marco97pa
-
-Report generated: report_google.md
+- fhasse95: https://github.com/fhasse95
+- anuraghazra: https://github.com/anuraghazra
+- inttter: https://github.com/inttter
+- StepfenShawn: https://github.com/StepfenShawn
 ```
 
 ## 貢獻方式
