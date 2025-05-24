@@ -105,28 +105,56 @@ HenryLok0's icon: https://avatars.githubusercontent.com/u/143982077?v=4
 Profile: https://github.com/HenryLok0
 User: HenryLok0 (Henry Lok)
 Bio: Web & open-source developer.
+Building tools for sustainable web, and better dev experience.
 Location: Hong Kong
 Followers: 1 | Following: 3
 Public Repos: 3
 Joined GitHub: 2023-09-04T03:12:02.000Z (Local: 2023/9/4 上午11:12:02)
 Most Used Language: JavaScript
-Last pushed repo: DevProjectConnector (2025-05-23T14:05:49Z, Local: 2025/5/23 下午10:05:49)
+Last pushed repo: DevProjectConnector (2025-05-24T03:53:26Z, Local: 2025/5/24 上午11:53:26)
 
 Your Top Starred Projects:
-  - DevProjectConnector (2): https://github.com/HenryLok0/DevProjectConnector
-  - WebEcoAnalyzer (2): https://github.com/HenryLok0/WebEcoAnalyzer
+  - DevProjectConnector (2★): https://github.com/HenryLok0/DevProjectConnector
+  - WebEcoAnalyzer (2★): https://github.com/HenryLok0/WebEcoAnalyzer
+  - HenryLok0 (0★): https://github.com/HenryLok0/HenryLok0
 
 Recently Active Projects:
-  - DevProjectConnector (last push: 2025-05-23T14:05:49Z)
+  - DevProjectConnector (last push: 2025-05-24T03:53:26Z)
   - WebEcoAnalyzer (last push: 2025-05-22T16:52:04Z)
+  - HenryLok0 (last push: 2025-05-21T03:08:49Z)
+
+Your Starred Projects:
+  - fhasse95/budget-flow-ios-translations (3★): https://github.com/fhasse95/budget-flow-ios-translations
+  - HenryLok0/DevProjectConnector (2★): https://github.com/HenryLok0/DevProjectConnector
+  - HenryLok0/WebEcoAnalyzer (2★): https://github.com/HenryLok0/WebEcoAnalyzer
+
+Your Profile README Preview:
+### GitHub Analytics
+
+| <img align="center" src="https://github-readme-stats.vercel.app/api?username=henrylok0&theme=github_dark&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" alt="Henry Lok's GitHub stats" /> | <img align="center" src="https://github-readme-stats.verc ...
+
+Projects you have collaborated on (PR/Issue):
+  - easeparkhk/easeparkhk (https://github.com/easeparkhk/easeparkhk)
+
+
 
 New Projects You May Like:
-- Pierian-Data/Complete-Python-3-Bootcamp (28389): https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
-- python/cpython (67164): https://github.com/python/cpython
+- Pierian-Data/Complete-Python-3-Bootcamp (28390★): https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
+- python/cpython (67167★): https://github.com/python/cpython
+- eugenp/tutorials (37152★): https://github.com/eugenp/tutorials
+- abhisheknaiidu/awesome-github-profile-readme (26626★): https://github.com/abhisheknaiidu/awesome-github-profile-readme
+- rahuldkjain/github-profile-readme-generator (22832★): https://github.com/rahuldkjain/github-profile-readme-generator
+
+Projects Closest to Your Tech/Topics:
+- NARKOZ/hacker-scripts (48452★): https://github.com/NARKOZ/hacker-scripts
+- qilingframework/qiling (5437★): https://github.com/qilingframework/qiling
 
 Developers You May Want to Know:
 - trekhleb: https://github.com/trekhleb
 - kamranahmedse: https://github.com/kamranahmedse
+- bruce: https://github.com/bruce
+- tkersey: https://github.com/tkersey
+- hchoroomi: https://github.com/hchoroomi
 ```
 
 ---
