@@ -1,6 +1,6 @@
 # DevProjectConnector
 
-[中文說明 (Traditional Chinese)](./TC.READMEmd)
+[中文說明 (Traditional Chinese)](./README.Tc.md)
 
 [![Node.js](https://img.shields.io/badge/Node.js-14%2B-green?logo=node.js)](https://nodejs.org/)
 [![MIT License](https://img.shields.io/github/license/HenryLok0/DevProjectConnector?color=blue)](https://github.com/HenryLok0/DevProjectConnector/blob/main/LICENSE)
