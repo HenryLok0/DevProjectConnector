@@ -111,7 +111,7 @@ async function recommendNewRepos(userProfile) {
         }
         if (unique.length >= 5) break;
     }
-    // 最後再過濾一次 starred
+    // Finally filter starred again
     return sortByCommunityActivity(unique.filter(repo => !starredNames.has(repo.full_name)));
 }
 
@@ -168,7 +168,7 @@ async function findClosestRepos(userProfile) {
         }
         if (unique.length >= 5) break;
     }
-    // 最後再過濾一次 starred
+    // Finally filter starred again
     return sortByCommunityActivity(unique.filter(repo => !starredNames.has(repo.full_name)));
 }
 
@@ -199,7 +199,7 @@ async function findClosestUsers(userProfile) {
         myOrgs = orgsRes.data.map(org => org.login.toLowerCase());
     } catch (e) { }
 
-    // 1. 關鍵字組合搜尋
+    // 1. Keyword combination search
     if (keywords.length > 1) {
         for (let i = 0; i < keywords.length; i++) {
             for (let j = i + 1; j < keywords.length; j++) {
@@ -227,7 +227,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 2. 關鍵字+developer/engineer/opensource
+    // 2. Keyword + developer/engineer/opensource
     const extraTerms = ['developer', 'engineer', 'opensource'];
     if (users.length < 5) {
         for (const kw of keywords) {
@@ -256,9 +256,9 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 3. 以語言搜尋熱門開發者
+    // 3. Search for popular developers by language
     if (users.length < 5 && userProfile.repos && userProfile.repos.length > 0) {
-        // 統計語言
+        // Statistical Language
         const langCount = {};
         userProfile.repos.forEach(repo => {
             if (repo.language) langCount[repo.language] = (langCount[repo.language] || 0) + 1;
@@ -286,7 +286,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 4. 你 star/fork 過的專案的主要貢獻者（需比對關鍵字重疊）
+    // 4. The main contributors to the projects you star/fork (need to compare keyword overlap)
     if (users.length < 5 && userProfile.starred && userProfile.starred.length > 0) {
         for (const repo of userProfile.starred.slice(0, 3)) {
             try {
@@ -300,7 +300,7 @@ async function findClosestUsers(userProfile) {
                         !mutuals.has(user.login) &&
                         !myOrgs.includes(user.login.toLowerCase())
                     ) {
-                        // 進一步比對關鍵字重疊
+                        // Further comparison of keyword overlap
                         let overlap = 0;
                         const kwSet = new Set(keywords.map(k => k.toLowerCase()));
                         if (user.login) {
@@ -319,7 +319,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 5. 參與過的 PR/Issue 的其他參與者
+    // 5. Other participants in the PR/Issue
     if (users.length < 5 && userProfile.collaborated && userProfile.collaborated.length > 0) {
         for (const repoName of userProfile.collaborated.slice(0, 3)) {
             try {
@@ -330,7 +330,7 @@ async function findClosestUsers(userProfile) {
                         event.actor.login !== userProfile.login &&
                         !mutuals.has(event.actor.login) &&
                         !myOrgs.includes(event.actor.login.toLowerCase())) {
-                        // 進一步比對關鍵字重疊
+                        // Further comparison of keyword overlap
                         let overlap = 0;
                         const kwSet = new Set(keywords.map(k => k.toLowerCase()));
                         const words = event.actor.login.toLowerCase().split(/\W+/);
@@ -340,8 +340,8 @@ async function findClosestUsers(userProfile) {
                                 login: event.actor.login,
                                 avatar_url: event.actor.avatar_url,
                                 type: 'User',
-                                bio: '', // 無法直接取得
-                                followers: 0 // 無法直接取得
+                                bio: '', // Not directly available
+                                followers: 0 // Not directly available
                             });
                             seen.add(event.actor.login);
                         }
@@ -353,7 +353,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 6. 額外：推薦語言主題的 GitHub Top 開發者（根據 trending 或 followers）
+    // 6. Bonus: Top GitHub developers who recommend language topics (by trending or followers)
     if (users.length < 5 && keywords.length > 0) {
         for (const kw of keywords) {
             const url = `https://api.github.com/search/users?q=${encodeURIComponent(kw)}+in:bio+in:login+in:name&sort=followers&order=desc&type=Users&per_page=2`;
@@ -377,7 +377,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 7. 互動過專案的 owner
+    // 7. Owners who have interacted with the project
     if (users.length < 5 && userProfile.collaborated && userProfile.collaborated.length > 0) {
         for (const repoName of userProfile.collaborated.slice(0, 5)) {
             try {
@@ -408,7 +408,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 8. 額外：根據你常用語言的 trending 專案作者
+    // 8. Bonus: Trending project authors based on your favorite language
     if (users.length < 5 && userProfile.repos && userProfile.repos.length > 0) {
         const langCount = {};
         userProfile.repos.forEach(repo => {
@@ -417,7 +417,7 @@ async function findClosestUsers(userProfile) {
         const topLangs = Object.entries(langCount).sort((a, b) => b[1] - a[1]).slice(0, 2).map(e => e[0]);
         for (const lang of topLangs) {
             try {
-                // 這裡用 stars 排序找出熱門專案，再推薦其作者
+                // Here we use stars to sort to find popular projects and recommend their authors
                 const url = `https://api.github.com/search/repositories?q=language:${encodeURIComponent(lang)}+pushed:>2023-01-01&sort=stars&order=desc&per_page=3`;
                 const res = await axios.get(url, axiosConfig);
                 for (const repo of res.data.items) {
@@ -447,7 +447,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 9. 額外：根據你有互動過的專案的 contributors
+    // 9. Additional: Based on the contributors of the projects you have interacted with
     if (users.length < 5 && userProfile.collaborated && userProfile.collaborated.length > 0) {
         for (const repoName of userProfile.collaborated.slice(0, 3)) {
             try {
@@ -472,7 +472,7 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 10. 額外：推薦 followers/following 的 followers/following
+    // 10. Extra: Recommend followers/following of followers/following
     if (users.length < 5 && following.length > 0) {
         for (const followee of following.slice(0, 3)) {
             try {
@@ -497,13 +497,13 @@ async function findClosestUsers(userProfile) {
         }
     }
 
-    // 更嚴格的排序：根據 bio/login/name 關鍵字重疊數量
+    // Stricter sorting: based on the number of overlaps between bio/login/name keywords
     function userScore(u) {
         let score = 0;
         if (u.avatar_url) score += 2;
         if (u.bio && u.bio.length > 10) score += 2;
         if (u.followers) score += Math.min(u.followers, 100) / 20;
-        // 關鍵字重疊數
+        // Keyword overlap count
         let overlap = 0;
         const kwSet = new Set(keywords.map(k => k.toLowerCase()));
         for (const field of ['bio', 'name', 'login']) {

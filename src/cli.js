@@ -184,7 +184,7 @@ program
         reportLines.push(`  - [${repo.full_name}](${repo.html_url}) (${repo.stargazers_count}★)`);
       });
 
-      // 匯出推薦專案時也去重複
+      // Remove duplicates when exporting recommended projects
       const exportedRepoNames = new Set();
       reportLines.push(`\nNew Projects You May Like:`);
       newRepos.forEach(repo => {
@@ -205,8 +205,6 @@ program
         reportLines.push(`  - [${user.login}](https://github.com/${user.login})`);
       });
 
-      // 你可以選擇將 reportLines 輸出到檔案
-      // fs.writeFileSync('github_report.md', reportLines.join('\n'), 'utf-8');
 
     } catch (error) {
       console.error('Error fetching data:', error.message);
