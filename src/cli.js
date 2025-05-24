@@ -106,13 +106,10 @@ program
         });
       }
 
-      console.log('\nProjects you are familiar with (based on your activity):');
+      console.log('');
       if (matchedProjects.length) {
-        matchedProjects.forEach(repo => {
-          console.log(`- ${repo.full_name} (${repo.stargazers_count}★): ${repo.html_url}`);
-        });
       } else {
-        console.log('(No recommendations yet)');
+        console.log('');
       }
 
       // ====== Fresh Discoveries & Closest Match Recommendations (去重複) ======

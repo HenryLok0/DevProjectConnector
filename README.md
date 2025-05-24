@@ -65,15 +65,19 @@ node bin/index.js henrylok0
 ### Example Output
 
 ```
+Welcome! Here is your personalized GitHub Open Source Exploration Report!
+
 HenryLok0's icon: https://avatars.githubusercontent.com/u/143982077?v=4
 Profile: https://github.com/HenryLok0
 User: HenryLok0 (Henry Lok)
+Bio: Web & open-source developer.
+Building tools for sustainable web, and better dev experience.
 Location: Hong Kong
 Followers: 1 | Following: 3
 Public Repos: 3
 Joined GitHub: 2023-09-04T03:12:02.000Z (Local: 2023/9/4 上午11:12:02)
 Most Used Language: JavaScript
-Last pushed repo: DevProjectConnector (2025-05-23T11:36:49Z, Local: 2025/5/23 下午7:36:49)
+Last pushed repo: DevProjectConnector (2025-05-23T14:05:49Z, Local: 2025/5/23 下午10:05:49)
 
 Your Top Starred Projects:
   - DevProjectConnector (2★): https://github.com/HenryLok0/DevProjectConnector
@@ -81,7 +85,7 @@ Your Top Starred Projects:
   - HenryLok0 (0★): https://github.com/HenryLok0/HenryLok0
 
 Recently Active Projects:
-  - DevProjectConnector (last push: 2025-05-23T11:36:49Z)
+  - DevProjectConnector (last push: 2025-05-23T14:05:49Z)
   - WebEcoAnalyzer (last push: 2025-05-22T16:52:04Z)
   - HenryLok0 (last push: 2025-05-21T03:08:49Z)
 
@@ -95,31 +99,22 @@ Your Profile README Preview:
 
 | <img align="center" src="https://github-readme-stats.vercel.app/api?username=henrylok0&theme=github_dark&show_icons=true&hide_border=true&count_private=true&include_all_commits=true" alt="Henry Lok's GitHub stats" /> | <img align="center" src="https://github-readme-stats.verc ...
 
-Projects you have collaborated on (PR/Issue):
-  - easeparkhk/easeparkhk (https://github.com/easeparkhk/easeparkhk)
 
-Projects you are familiar with (based on your activity):
-- fhasse95/budget-flow-ios-translations (3★): https://github.com/fhasse95/budget-flow-ios-translations
-- anuraghazra/github-readme-stats (73400★): https://github.com/anuraghazra/github-readme-stats
-- inttter/md-badges (842★): https://github.com/inttter/md-badges
-- StepfenShawn/Cantonese (1179★): https://github.com/StepfenShawn/Cantonese
 
 New Projects You May Like:
-- Pierian-Data/Complete-Python-3-Bootcamp (28387★): https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
-- python/cpython (67163★): https://github.com/python/cpython
-- FFmpeg/FFmpeg (50067★): https://github.com/FFmpeg/FFmpeg
-- nodejs/node-v0.x-archive (34394★): https://github.com/nodejs/node-v0.x-archive
-- googlehosts/hosts (20791★): https://github.com/googlehosts/hosts
+- Pierian-Data/Complete-Python-3-Bootcamp (28389★): https://github.com/Pierian-Data/Complete-Python-3-Bootcamp
+- python/cpython (67164★): https://github.com/python/cpython
+- eugenp/tutorials (37152★): https://github.com/eugenp/tutorials
+- abhisheknaiidu/awesome-github-profile-readme (26626★): https://github.com/abhisheknaiidu/awesome-github-profile-readme
+- rahuldkjain/github-profile-readme-generator (22832★): https://github.com/rahuldkjain/github-profile-readme-generator
 
 Projects Closest to Your Tech/Topics:
-- eugenp/tutorials (37151★): https://github.com/eugenp/tutorials
-- abhisheknaiidu/awesome-github-profile-readme (26615★): https://github.com/abhisheknaiidu/awesome-github-profile-readme
+- NARKOZ/hacker-scripts (48452★): https://github.com/NARKOZ/hacker-scripts
+- qilingframework/qiling (5437★): https://github.com/qilingframework/qiling
 
 Developers You May Want to Know:
-- fhasse95: https://github.com/fhasse95
-- anuraghazra: https://github.com/anuraghazra
-- inttter: https://github.com/inttter
-- StepfenShawn: https://github.com/StepfenShawn
+- trekhleb: https://github.com/trekhleb
+- kamranahmedse: https://github.com/kamranahmedse
 ```
 
 ## Contributing
