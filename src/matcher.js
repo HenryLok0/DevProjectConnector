@@ -5,19 +5,21 @@ const STOPWORDS = new Set([
     'github', 'project', 'code', 'open', 'source', 'repo', 'readme', 'main', 'test', 'example', 'sample', 'awesome', 'list', 'tool', 'tools', 'app', 'application', 'api', 'framework', 'library', 'system', 'file', 'files', 'data', 'user', 'users', 'use', 'using', 'for', 'with', 'and', 'the', 'from', 'your', 'this', 'that', 'about', 'more', 'other', 'based', 'support', 'simple', 'awesome', 'awesome-list', 'http', 'https'
 ]);
 
-// Extract top keywords from user's repos, starred repos, and README
+// Extract top keywords from user's repos, starred repos, and README (now also repo readmes)
 function extractKeywords(userProfile) {
     const words = [];
     userProfile.repos.forEach(repo => {
         if (repo.language) words.push(repo.language);
         if (repo.topics) words.push(...repo.topics);
         if (repo.description) words.push(...repo.description.split(/\W+/));
+        if (repo.readme) words.push(...repo.readme.split(/\W+/));
     });
     if (userProfile.starred) {
         userProfile.starred.forEach(repo => {
             if (repo.language) words.push(repo.language);
             if (repo.topics) words.push(...repo.topics);
             if (repo.description) words.push(...repo.description.split(/\W+/));
+            if (repo.readme) words.push(...repo.readme.split(/\W+/));
         });
     }
     if (userProfile.readme) {
@@ -529,10 +531,11 @@ async function findClosestUsers(userProfile) {
 }
 
 async function matchProjects(userProfile) {
+    // 可根據 repo readme、topics、description、語言等進行分析推薦
+    // 這裡暫時回傳空陣列
     return [];
 }
 
-// ...existing code...
 module.exports = {
     matchProjects,
     recommendNewRepos,
